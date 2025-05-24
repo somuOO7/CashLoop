@@ -1,0 +1,15 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Check commit message format
+commit_msg_file=$1
+commit_msg=$(cat "$commit_msg_file")
+
+# Simple pattern to ensure commit messages start with a type (feat, fix, chore, etc.)
+if ! echo "$commit_msg" | grep -qE "^(feature|bugfix|refactor|test|style)(\(.+\))?: .+"; then
+  echo "ERROR: Invalid commit message format."
+  echo "Your commit message must start with one of: feature, bugfix, refactor, test, style"
+  echo "For example: feature: add new feature"
+  echo "Or: fix(auth): resolve login issue"
+  exit 1
+fi
